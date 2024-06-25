@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea id="contentTxt" style="width: 100%;"></textarea>
+    <button id="sendBtn">Update board</button>
+
+    <p id="boardContent">Sample content</p>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+     function vibrate() {
+            if (navigator.vibrate) {
+                navigator.vibrate(500);
+            } else {
+                console.log('Vibration API is not supported on this device.');
+            }
+        }
+    // This is necessary for connecting to the server
+    const socket=io()
+
+    sendBtn.addEventListener("click",()=>{
+        console.log("button clicked");
+        let txt=contentTxt.value
+        vibrate()
+        // Send message to the server
+        socket.emit("message",txt)
+    })
+
+    socket.on("message", (msg) => {
+            console.log(msg);
+            vibrate()
+            document.getElementById("boardContent").innerHTML = msg
+        })
+</script>
+</body>
+
+</html>
