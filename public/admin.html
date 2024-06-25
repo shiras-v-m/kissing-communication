@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kiss Me</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 
 <body>
@@ -17,7 +17,8 @@
             <img style="width: 300px;height: 200px;"
                 src="https://www.pngkit.com/png/full/2-29649_lipstick-lips-png-lipstick-lips-transparent.png"
                 alt="lip2">
-        </div>
+        </div> 
+        <div id="loveBackground" style="display: none;background: url('https://i.gifer.com/3p3j.gif'); width: 100%; height: 100vh;position: fixed;top: 0;left: 0;"></div>
         <!--     
     <h2 style="text-align: center;text-transform: uppercase;">Kiss me when you love</h2> -->
         <h2 id="boardContent" style="text-align: center;text-transform: uppercase;color: red;">Kiss Me when you love</h2>
@@ -26,10 +27,13 @@
         Made with ❤️ by Shiras VM
     </p>
 
+    <audio id="kissAudio" src="https://www.sound-searcher.com/download.php?url=sounds/girl%20saying%20i%20love%20you.mp3"></audio>
 
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        const loveBackground= document.getElementById('loveBackground');
+        const kissAudio = document.getElementById('kissAudio');
         function vibrate() {
             if (navigator.vibrate) {
                 navigator.vibrate(500);
@@ -39,16 +43,22 @@
         }
         // This is necessary for connecting to the server
         const socket = io()
-
+  
         sendBtn.addEventListener("touchstart", () => {
             console.log("button clicked");
             let txt = "I Love You"
             vibrate()
+            kissAudio.play()  // Play the audio
             // Send message to the server
             socket.emit("message", txt)
         })
 
         socket.on("message", (msg) => {
+            loveBackground.style.display="block"
+            setTimeout(()=>{
+                loveBackground.style.display="none"
+
+            },5000)
             console.log(msg);
             vibrate()
             document.getElementById("boardContent").innerHTML = msg

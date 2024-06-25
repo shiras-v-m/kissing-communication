@@ -7,7 +7,7 @@ const PORT=process.env.PORT || 3000
 
 
 // when user enter the page then board.html shows
-app.get("/admin",(req,res)=>{
+app.get("/",(req,res)=>{
     res.sendFile(__dirname+"/public/admin.html")
 })
 
