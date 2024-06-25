@@ -1,43 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Kiss Me</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <textarea id="contentTxt" style="width: 100%;"></textarea>
-    <button id="sendBtn">Update board</button>
+    <!-- <textarea id="contentTxt" style="width: 100%;"></textarea> -->
+    <!-- <button id="sendBtn">Update board</button> -->
+    <div
+        style="width: 100%;height: 90vh;display: flex;justify-content: center;align-items: center;flex-direction: column;">
+        <div class="lipContainer" id="sendBtn">
+            <img style="width: 300px;height: 200px;"
+                src="https://www.pngkit.com/png/full/2-29649_lipstick-lips-png-lipstick-lips-transparent.png"
+                alt="lip2">
+        </div>
+        <!--     
+    <h2 style="text-align: center;text-transform: uppercase;">Kiss me when you love</h2> -->
+        <h2 id="boardContent" style="text-align: center;text-transform: uppercase;color: red;">Kiss Me when you love</h2>
+    </div>
+    <p style="text-align: center; ">
+        Made with ❤️ by Shiras VM
+    </p>
 
-    <p id="boardContent">Sample content</p>
 
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-     function vibrate() {
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        function vibrate() {
             if (navigator.vibrate) {
                 navigator.vibrate(500);
             } else {
                 console.log('Vibration API is not supported on this device.');
             }
         }
-    // This is necessary for connecting to the server
-    const socket=io()
+        // This is necessary for connecting to the server
+        const socket = io()
 
-    sendBtn.addEventListener("click",()=>{
-        console.log("button clicked");
-        let txt=contentTxt.value
-        vibrate()
-        // Send message to the server
-        socket.emit("message",txt)
-    })
+        sendBtn.addEventListener("click", () => {
+            console.log("button clicked");
+            let txt = "I Love You"
+            vibrate()
+            // Send message to the server
+            socket.emit("message", txt)
+        })
 
-    socket.on("message", (msg) => {
+        socket.on("message", (msg) => {
             console.log(msg);
             vibrate()
             document.getElementById("boardContent").innerHTML = msg
         })
-</script>
+    </script>
 </body>
 
 </html>
